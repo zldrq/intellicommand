@@ -175,11 +175,13 @@ namespace IntelliCommand.Services
                     
                     var name = xNameAttribute.Value;
 
-                    if (!this.scopeDefinitions.ContainsKey(id))
-                    {
-                        this.scopeDefinitions.Add(id, name);
-                    }
+//in old version:
+//if some scope's name differs in default VS settings and current user settings, assertion fails.
+//e.g. <Scope Name="XAML Designer" ID="{E9B8485C-1217-4277-9ED6-C825A5AC1968}"/> is such name
+//it is "XAML UI Designer" in default settings files, but Visual Studio Changes it to "XAML Designer" in user's CurentSettings.vssettings
+                    this.scopeDefinitions[id] = name;
 
+                   
                     Debug.Assert(this.scopeDefinitions[id] == name, "this.scopeDefinitions[id] == name");
                     Debug.Assert(this.scopeDefinitions.Values.Count(v => v == name) == 1, "this.scopeDefinitions.Values.Count(v => v == name) == 1");
                 }
